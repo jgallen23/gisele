@@ -112,7 +112,7 @@ suite('collection', function() {
 
   });
 
-  suite('#load', function() {
+  suite('#populate', function() {
     test('takes a JSON array and creates new model instances', function() {
 
       var data = [
@@ -120,7 +120,9 @@ suite('collection', function() {
         { task: 'task2' },
         { task: 'task3' }
       ];
-      Task.load(data);
+      Task.populate(data);
+
+      assert.equal(Task.count(), 3);
       
     });
   });

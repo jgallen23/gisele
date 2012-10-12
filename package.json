@@ -16,7 +16,6 @@
   "devDependencies": {
     "mocha": "*"
   },
-  "main": "./lib/gisele.js",
   "scripts": {
     "test": "mocha"
   },
