@@ -123,6 +123,24 @@ suite('collection', function() {
       Task.populate(data);
 
       assert.equal(Task.count(), 3);
+      assert.equal(Task.populated, true);
+      
+    });
+
+    test('resets data', function() {
+
+      var data = [
+        { task: 'task1' },
+        { task: 'task2' },
+        { task: 'task3' }
+      ];
+      Task.populate(data);
+      var data2 = [
+        { task: 'task1' },
+        { task: 'task2' }
+      ];
+      Task.populate(data2);
+      assert.equal(Task.count(), 2);
       
     });
   });
@@ -153,6 +171,25 @@ suite('collection', function() {
       
     });
   });
+
+  suite('#clear', function() {
+
+    test('should clear data and counts', function() {
+      var data = [
+        { task: 'task1' },
+        { task: 'task2' },
+        { task: 'task3' }
+      ];
+      Task.populate(data);
+      assert.equal(Task.count(), 3);
+      Task.clear();
+      assert.equal(Task.count(), 0);
+      assert.deepEqual(Task._data, {});
+      
+    });
+    
+  });
+  
   
   
   

@@ -9,7 +9,7 @@ Gisele.Remote.makeRequest = function(options) {
     makeRequest(options);
   }
   setTimeout(function() {
-    var json = require('./fixtures/'+options.url);
+    var json = require('./fixtures/'+options.url+'.json');
     options.success(json);
   }, 100);
 }
@@ -31,7 +31,7 @@ suite('Gisele.Remote', function() {
       test('emit refresh event and populate', function(done) {
         var Task = Gisele.Remote.extend({
         }, {
-          url: 'tasks1.json'
+          url: 'tasks1'
         });
 
         Task.on('populate', function() {
@@ -48,7 +48,7 @@ suite('Gisele.Remote', function() {
         var Task = Gisele.Remote.extend({
         }, {
           url: function() {
-            return 'tasks1.json';
+            return 'tasks1';
           }
         });
 
@@ -66,7 +66,7 @@ suite('Gisele.Remote', function() {
         var count = 0;
         var Task = Gisele.Remote.extend({
         }, {
-          url: 'tasks1.json'
+          url: 'tasks1'
         });
 
         Task.on('populate', function() {
@@ -85,7 +85,7 @@ suite('Gisele.Remote', function() {
       test('call parse to manipulate data before populate', function(done) {
         var Task = Gisele.Remote.extend({
         }, {
-          url: 'tasks-parse.json',
+          url: 'tasks-parse',
           parse: function(item) {
             item.notes = item.notes.split(',');
             return item;
@@ -114,7 +114,7 @@ suite('Gisele.Remote', function() {
       test('emit populate event and populate instance', function(done) {
         
         var Task = Gisele.Remote.extend({
-          url: 'task1.json'
+          url: 'task1'
         });
         var task = new Task({ id: 1 });
 
@@ -134,8 +134,28 @@ suite('Gisele.Remote', function() {
         
         var Task = Gisele.Remote.extend({
           url: function() {
-            return 'task1.json';
+            return 'task1';
           }
+        });
+        var task = new Task({ id: 1 });
+
+        task.on('populate', function(task) {
+          assert.equal(task.id, 1);
+          assert.equal(task.name, 'task1')
+          assert.equal(task.complete, false);
+
+          assert.equal(task.populated, true);
+          done();
+
+        });
+        task.fetch();
+      });
+
+      test('if url not defined, append id to static ', function(done) {
+        
+        var Task = Gisele.Remote.extend({
+        }, {
+          url: 'task'
         });
         var task = new Task({ id: 1 });
 

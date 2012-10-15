@@ -36,6 +36,7 @@ suite('gisele', function() {
       var task = new Task({ note: 'hi' });
       assert.equal(task.note, 'hi');
     });
+
   });
   
   suite('#save', function() {
@@ -99,6 +100,37 @@ suite('gisele', function() {
       
     });
 
+  });
+  
+  suite('#populate', function() {
+      
+    test('should populate model with object and set populated to true', function() {
+      
+      var task = new Task();
+      task.populate({ name: 'task2', complete: false });
+
+      assert.equal(task.name, 'task2');
+      assert.equal(task.complete, false);
+      assert.equal(task.populated, true);
+    });
+
+    test('should be set to true if data other than id is passed in', function() {
+      var task = new Task({ name: 'task2' });
+      assert.equal(task.populated, true);
+    });
+
+    test('should be false if nothing passed in', function() {
+      var task = new Task();
+      assert.equal(task.populated, false);
+    });
+
+    test('should be false if just id passed in', function() {
+      var task = new Task({ id: 1 });
+      assert.equal(task.populated, false);
+      
+    });
+
+    
   });
   
   
