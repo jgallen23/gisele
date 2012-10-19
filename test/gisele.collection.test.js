@@ -190,6 +190,47 @@ suite('collection', function() {
     
   });
   
+  suite('#sort', function() {
+
+    test('should sort data based on function', function() {
+      var data = [
+        { task: 'task1', priority: 3 },
+        { task: 'task2', priority: 1 },
+        { task: 'task3', priority: 2 }
+      ]
+      Task.populate(data);
+      var tasks = Task.sort(function(task) {
+        return task.priority; 
+      });
+
+      assert.equal(tasks.length, 3);
+      assert.equal(tasks[0].task, 'task2');
+      assert.equal(tasks[1].task, 'task3');
+      assert.equal(tasks[2].task, 'task1');
+      
+    });
+
+    test('should sort by name', function() {
+      var data = [
+        { name: 'task2', priority: 3 },
+        { name: 'task1', priority: 1 },
+        { name: 'task3', priority: 2 }
+      ]
+      
+      Task.populate(data);
+      var tasks = Task.sort(function(task) {
+        return task.name; 
+      });
+
+      assert.equal(tasks.length, 3);
+      assert.equal(tasks[0].name, 'task1');
+      assert.equal(tasks[1].name, 'task2');
+      assert.equal(tasks[2].name, 'task3');
+      
+    });
+    
+  });
+  
   
   
   

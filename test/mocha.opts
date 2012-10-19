@@ -1,1 +1,1 @@
---ui tdd -G -R list
+--ui tdd -G -R list -g sort
