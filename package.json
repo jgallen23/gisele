@@ -15,10 +15,13 @@
     "data-diff": "0.0.2"
   },
   "devDependencies": {
-    "mocha": "*"
+    "mocha": "*",
+    "dist": "*",
+    "clientside": "*"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "browser": "clientside -m index.js -n Gisele | dist -o dist -f gisele.js"
   },
   "bin": {}
 }
