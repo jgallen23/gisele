@@ -64,6 +64,17 @@ suite('collection', function() {
     
   });
 
+  suite('#find', function() {
+    test('find is a function', function() {
+      assert.equal(typeof Task.find, 'function');
+    });
+    test('returns task instance by id', function() {
+      var task = new Task();
+      task.save();
+      assert.equal(Task.find(task.id), task);
+    });
+  });
+
   suite('#count', function() {
     test('count is a function', function() {
       assert.equal(typeof Task.count, 'function');
@@ -142,6 +153,22 @@ suite('collection', function() {
       Task.populate(data2);
       assert.equal(Task.count(), 2);
       
+    });
+
+    test('option to update existing vs clearing', function() {
+      var data = [
+        { task: 'task1' },
+        { task: 'task2' },
+        { task: 'task3' }
+      ];
+      Task.populate(data);
+      var data2 = [
+        { id: Task.all()[0].id, task: 'task1 changed' },
+        { task: 'task4' }
+      ];
+      Task.populate(data2, { update: true });
+      assert.equal(Task.all()[0].task, 'task1 changed');
+      assert.equal(Task.count(), 4);
     });
   });
 
