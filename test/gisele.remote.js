@@ -103,6 +103,40 @@ suite('Gisele.Remote', function() {
 
         Task.fetch();
       });
+
+      test('2nd fetch caculates diff', function(done) {
+        var Task = Gisele.Remote.extend({
+        }, {
+          url: 'tasks1'
+        });
+
+        var first = true;
+        var task1;
+
+        Task.on('populate', function() {
+          if (first) {
+            //change url for tests
+            Task.url = 'tasks1-diff';
+
+            task1 = Task.find(1);
+            task1.on('update', function() {
+              assert.equal(task1.name, 'Task 1 changed');
+              assert.equal(task1.complete, true);
+            });
+            
+            Task.on('create', function(task) {
+              assert.equal(task.name, 'Task 3');
+            });
+            Task.fetch();
+
+            first = false;
+          } else {
+            assert.equal(Task.count(), 3);
+            done();
+          }
+        });
+        Task.fetch();
+      });
       
     });
 

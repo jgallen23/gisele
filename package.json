@@ -11,7 +11,8 @@
   "dependencies": {
     "aug": "0.0.5",
     "simple-guid": "0.0.1",
-    "thrive": "0.0.2"
+    "thrive": "0.0.2",
+    "data-diff": "0.0.2"
   },
   "devDependencies": {
     "mocha": "*"
@@ -19,6 +20,5 @@
   "scripts": {
     "test": "mocha"
   },
-  "bin": {
-  }
+  "bin": {}
 }
